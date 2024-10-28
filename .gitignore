@@ -1,0 +1,46 @@
+# .gitignore pour Python et Go
+
+# Fichiers et répertoires Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+.eggs/
+*.pyd
+*.pyo
+venv/
+env/
+.venv/
+build/
+dist/
+*.log
+*.pot
+*.cover
+*.py,cover
+.coverage
+.cache
+coverage.xml
+nosetests.xml
+*.tgz
+*.pylint.d
+.tox/
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+__pypackages__/
+profile_default/
+.pytype/
+.mypy_cache/
+.DS_Store
+
+# Fichiers et répertoires Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
