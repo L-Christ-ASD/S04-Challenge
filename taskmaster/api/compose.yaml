@@ -23,3 +23,20 @@ services:
     # le port 5000 de mon conteneur (a droite) 
     ports: 
       - "5000:5000"
+
+  # ajout d'un service de base de données PostgreSQL 
+  mypgdb:
+    image: postgres:15
+    environment:
+      # crée automatiquement un utilisateur pour nous 
+      POSTGRES_USER: pguser
+      # spécifie automatiquement un mot de passe por l'utilisateur spécifié ci-dessus 
+      POSTGRES_PASSWORD: pgpassword # a changer lors d'utilisation cas reel
+      # crée automatiquement une base de données pour nous
+      POSTGRES_DB: taskmgr
+    # je mappe le port réseau 5432 de ma machine (a gauche), avec 
+    # le port 5432 de mon conteneur (a droite) 
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./postgres_data:/var/lib/postgresql/data
