@@ -21,7 +21,7 @@ Dans le conteneur :
 ```bash
 cd /rel
 pip install -r requirements.txt
-flask run
+flask run # \ flask run --host=0.0.0.0
 
 # on peut alors ouvrir un autre terminal, se placer dans le conteneur
 # (si VsCode s'entête à vouloir faire du port-forwarding) 
@@ -60,7 +60,7 @@ pip install -r requirements.txt
 # Je lance mon application 
 flask run --host=0.0.0.0
 
-# Dans un terminal, je me place également dans le conteneur
+# Dans un autre terminal, je me place également dans le conteneur
 docker exec -it api-pythonapp-1 bash
 curl -X GET http://localhost:5000/api/tasks
 curl -X POST http://localhost:5000/api/tasks -H "Content-Type: application/json" --data '{"title": "title1", "description": "description1"}'

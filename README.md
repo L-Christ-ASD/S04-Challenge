@@ -159,4 +159,78 @@ SELECT status, COUNT(*) FROM projets GROUP BY status;
 -- nom du projet le plus récent (exercice 3.3)
 SELECT nom AS nom_projet FROM projets WHERE date_debut = (SELECT MAX(date_debut) FROM projets);
 
+
+-- backup de la base de données de nom taskmgr
+pg_dump -U pguser -d taskmgr > backup.sql
+-- je me reconnecte a la DB, drop, puis crée une nouvelle qui est vide 
+psql -U pguser postgres
+DROP DATABASE taksmgr;
+CREATE DATABASE taksmgr; 
+\q
+psql -U pguser -d taskmgr < backup.sql 
+
+psql -U pguser -d taskmgr
+
 ```
+# Correction exercices 3
+
+On reprends from scratch : 
+```bash
+docker compose up -d mypgdb
+docker ps
+docker exec -it api-mypgdb-1 bash
+```
+Une fois dans le conteneur : 
+```
+psql -U pguser -d postgres
+CREATE DATABASE devops_db;
+\c devops_db;
+CREATE TABLE applications (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, version VARCHAR(50) NOT NULL, last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+\dt 
+\d applications
+
+INSERT INTO applications (name, version) VALUES ('App Calculator 3000', 'v1.0.10');
+INSERT INTO applications (name, version) VALUES ('App Machine a Cookie', 'v2.0.1');
+INSERT INTO applications (name, version) VALUES ('App Slack', 'v1.5.0');
+
+select * from applications;
+
+select * from applications where version like 'v1%';
+
+```
+
+
+```bash
+echo -e "\\\echo 'Nombre d enregistrements dans la table' \n SELECT COUNT(*) FROM :name; " > count_records.sql
+cat count_records.sql
+
+psql -U pguser -d devops_db;
+# execute le fichier count_records.sql
+\i count_records.sql
+
+\set name 'applications'
+\i count_records.sql
+```
+
+Exercice 3: 
+```bash
+# backup de la base de données de nom taskmgr
+pg_dump -U pguser -d devops_db > backup_devops_db.sql
+# pour afficher le contenu d'un fichier dans le terminal je peux utiliser 
+# la commande cat 
+cat backup_devops_db.sql
+# je me reconnecte a la DB, drop, puis crée une nouvelle qui est vide 
+psql -U pguser postgres
+DROP DATABASE devops_db;
+\l
+CREATE DATABASE devops_db; 
+\c devops_db;
+\dt
+\q
+# on restore notre base de données 
+psql -U pguser -d devops_db < backup_devops_db.sql
+# on se reconnecte pour vérifier que c'est bien le cas
+psql -U pguser -d devops_db
+\dt 
+select * from applications;
+``` 

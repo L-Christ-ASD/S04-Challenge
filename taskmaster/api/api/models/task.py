@@ -1,6 +1,6 @@
 from datetime import datetime
 
-class User:
+class Task:
     def __init__(self, title, dedscription, status):
         self.id = None # sera défini lors de l'ajout à la liste
         self.title = title
